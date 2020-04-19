@@ -16,27 +16,22 @@ app.get('/', (req, res) => {
         // Generate an OAuth URL and redirect there
         const url = oAuth2Client.generateAuthUrl({
             access_type: 'offline',
-            scope: 'https://www.googleapis.com/auth/gmail.readonly'
+            scope: 'https://www.googleapis.com/auth/userinfo.profile'
         });
         console.log(url)
         res.redirect(url);
     } else {
-        const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
-        gmail.users.labels.list({
-            userId: 'me',
-        }, (err, res) => {
-            if (err) return console.log('The API returned an error: ' + err);
-            const labels = res.data.labels;
-            if (labels.length) {
-                console.log('Labels:');
-                labels.forEach((label) => {
-                    console.log(`- ${label.name}`);
-                });
+        var oauth2 = google.oauth2({ auth: oAuth2Client, version: 'v1' });
+        oauth2.userinfo.v2.me.get(function(err, result) {
+           if (err) {
+                console.log('Niestety BŁĄD!!');
+                console.log(err);
             } else {
-                console.log('No labels found.');
+                loggedUser = result.data.name;
+                console.log(loggedUser);
             }
+        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">'))
         });
-        res.send('Logged in')
     }
 })
 
