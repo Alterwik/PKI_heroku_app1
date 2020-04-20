@@ -12,6 +12,10 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_U
 var authed = false;
 
 app.get('/', (req, res) => {
+    res.send('<a href="/loginGoogle">login via Google account</a>');
+})
+
+app.get('/loginGoogle', (req, res) => {
     if (!authed) {
         // Generate an OAuth URL and redirect there
         const url = oAuth2Client.generateAuthUrl({
