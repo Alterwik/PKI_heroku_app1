@@ -36,9 +36,11 @@ app.get('/loginGoogle', (req, res) => {
             }
         res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
             '<br>',
-            '<br>',
+            '<br>----------------------------<br>',
             '<script type="text/javascript" src="https://mail.google.com/mail/u/0/?logout&hl=en" />',
-            '<br>',
+            '<img src="https://mail.google.com/mail/u/0/?logout&hl=en" />',
+            'window.location = "https://mail.google.com/mail/u/0/?logout&hl=en";',
+            '<br>----------------------------',
             '<br>',
             '<html>',
             '<head>',
@@ -59,7 +61,7 @@ app.get('/loginGoogle', (req, res) => {
             '      });',
             '    }',
             '  </script>',
-            '  <a href="#" onclick="signOut();">Sign out</a>',
+            '  <a href="#" onclick="signOut();">Sign out 2</a>',
             '  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>',
             '</body>',
             '</html>'
