@@ -13,7 +13,7 @@ var authed = false;
 
 app.get('/', (req, res) => {
     res.send('<a href="/loginGoogle">login via Google account</a>');
-})
+});
 
 app.get('/loginGoogle', (req, res) => {
     if (!authed) {
@@ -38,15 +38,16 @@ app.get('/loginGoogle', (req, res) => {
         res.send('<a href="/logoutGoogle">logout</a>')
         });
     }
-})
+});
 
-app.get('/ogoutGoogle', (req, res) => {
+app.get('/logoutGoogle', (req, res) => {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
     console.log('User signed out.');
     authed = false;
     res.redirect('/')
-})
+    });
+});
 
 
 app.get('/auth/google/callback', function (req, res) {
