@@ -34,8 +34,8 @@ app.get('/loginGoogle', (req, res) => {
                 loggedUser = result.data.name;
                 console.log(loggedUser);
             }
-        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">'))
-        res.send('<a href="/logoutGoogle">logout</a>')
+        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
+         '<br><br><a href="/logoutGoogle">logout</a>'))
         });
     }
 });
