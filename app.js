@@ -41,8 +41,7 @@ app.get('/loginGoogle', (req, res) => {
 });
 
 app.get('/logoutGoogle', (req, res) => {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
+    oAuth2Client.signOut().then(function () {
     console.log('User signed out.');
     authed = false;
     res.redirect('/')
