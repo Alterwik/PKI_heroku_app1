@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
         console.log(url)
         res.redirect(url);
     } else {
-        var oauth2 = google.oauth2({ auth: oAuth2Client, version: 'v1' });
+        var oauth2 = google.oauth2({ auth: oAuth2Client, version: 'v2' });
         oauth2.userinfo.v2.me.get(function(err, result) {
            if (err) {
                 console.log('Niestety BŁĄD!!');
