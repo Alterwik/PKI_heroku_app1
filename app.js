@@ -35,16 +35,38 @@ app.get('/loginGoogle', (req, res) => {
                 console.log(loggedUser);
             }
         res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
-            '<script src="https://apis.google.com/js/platform.js" async defer></script>',
-            '<a href="#" onclick="signOut();">Sign out</a>',
-            '<script>',
-            '  function signOut() {',
-            '    var auth2 = gapi.auth2.getAuthInstance();',
-            '    auth2.signOut().then(function () {',
-            '      console.log(\'User signed out.\');',
-            '    });',
-            '  }',
-            '</script>'
+            '<html>',
+            '<head>',
+            '   <meta name="google-signin-client_id" content="549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com">',
+            '</head>',
+            '<body>',
+            '  <script>',
+            '    function signOut() {',
+            '      var auth2 = gapi.auth2.getAuthInstance();',
+            '      auth2.signOut().then(function () {',
+            '        console.log('User signed out.');',
+            '      });',
+            '    }',
+            '    function onLoad() {',
+            '      gapi.load('auth2', function() {',
+            '        gapi.auth2.init();',
+            '      });',
+            '    }',
+            '  </script>',
+            '  <a href="#" onclick="signOut();">Sign out</a>',
+            '  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>',
+            '</body>',
+            '</html>'
+            // '<script src="https://apis.google.com/js/platform.js" async defer></script>',
+            // '<a href="#" onclick="signOut();">Sign out</a>',
+            // '<script>',
+            // '  function signOut() {',
+            // '    var auth2 = gapi.auth2.getAuthInstance();',
+            // '    auth2.signOut().then(function () {',
+            // '      console.log(\'User signed out.\');',
+            // '    });',
+            // '  }',
+            // '</script>'
 
 
             ))
