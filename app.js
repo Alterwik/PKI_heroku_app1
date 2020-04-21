@@ -34,70 +34,10 @@ app.get('/loginGoogle', (req, res) => {
                 loggedUser = result.data.name;
                 console.log(loggedUser);
             }
-        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
-            '<br>',
-            '<br>1----------------------------|<br>',
-            '<script type="text/javascript" src="https://mail.google.com/mail/u/0/?logout&hl=en" />',
-            '<img src="https://mail.google.com/mail/u/0/?logout&hl=en" />',
-            'window.location = "https://mail.google.com/mail/u/0/?logout&hl=en";',
-            '<br>1----------------------------',
-            '<br>',
-            '<html>',
-            '<head>',
-            '   <meta name="google-signin-client_id" content="549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com">',
-            '</head>',
-            '<body>',
-            '  <script>',
-            '    function signOut() {',
-            '      var auth2 = gapi.auth2.getAuthInstance();',
-            '      auth2.signOut().then(function () {',
-            '        console.log(\'User signed out.\');',
-            '      });',
-            '      auth2.disconnect()',
-            '    }',
-            '    function onLoad() {',
-            '      gapi.load(\'auth2\', function() {',
-            '        gapi.auth2.init();',
-            '      });',
-            '    }',
-            '  </script>',
-            '  <a href="#" onclick="signOut();">Sign out 2</a>',
-            '  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>',
-            '</body>',
-            '</html>'
-
-// var auth2 = gapi.auth2.getAuthInstance();
-// auth2.signOut().then(function () {
-// });
-// auth2.disconnect();
-
-            // '<script src="https://apis.google.com/js/platform.js" async defer></script>',
-            // '<a href="#" onclick="signOut();">Sign out</a>',
-            // '<script>',
-            // '  function signOut() {',
-            // '    var auth2 = gapi.auth2.getAuthInstance();',
-            // '    auth2.signOut().then(function () {',
-            // '      console.log(\'User signed out.\');',
-            // '    });',
-            // '  }',
-            // '</script>'
-
-
-            ))
-        // res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
-        //  '<br><br><a href="/logoutGoogle">logout</a>'))
+        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">'))
         });
     }
 });
-
-// app.get('/logoutGoogle', (req, res) => {
-//     oAuth2Client.signOut().then(function () {
-//     console.log('User signed out.');
-//     authed = false;
-//     res.redirect('/')
-//     });
-// });
-
 
 app.get('/auth/google/callback', function (req, res) {
     const code = req.query.code
