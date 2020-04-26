@@ -42,14 +42,14 @@ app.get('/loginGoogle', (req, res) => {
 });
 
 app.get('/logoutGoogle', (req, res) => {
+    authed = false;
+    loggedUser = null;
+    console.log("-------------is authed".concat(authed));
     res.send('<a href="/https://accounts.google.com/o/oauth2/revoke?' +
         'token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com?' +
         'continue=https://pki-app1.herokuapp.com/">logout</a>');
     req.logout();
     app.post('https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com');
-    authed = false;
-    loggedUser = null;
-    console.log("-------------is authed".concat(authed));
     res.redirect('/');
 });
 
