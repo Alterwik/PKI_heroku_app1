@@ -10,7 +10,7 @@ const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 var authed = false;
-var loggedUser;
+var loggedUser = null;
 
 app.get('/', (req, res) => {
     res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
@@ -48,24 +48,22 @@ app.get('/logoutGoogle', (req, res) => {
     req.logout();
     app.post('https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com');
     authed = false;
+    loggedUser = null;
     res.redirect('/');
 });
 
 app.get('/onlyForLogged', (req, res) => {
-    if (!authed) {
-        console.log('unauthorized user try to reach onlyForLogged');
-        res.redirect('/')
-    } else {
+    if (authed) {
         console.log('authorised user in onlyForLogged');
         let accountLogoutUrl = "https://www.google.com/accounts/Logout" +
             "?continue=https://appengine.google.com/_ah/logout" +
             "?continue=https://pki-app1.herokuapp.com/";
-
-
         res.send('Logged in: '.concat(loggedUser.name, '<img src="', loggedUser.picture, '"height="23" width="23">',
             '<br><br><a href="',accountLogoutUrl,'">logout from google account</a>',
             '<br><a href="/">logout</a>'));
-
+    } else {
+        console.log('unauthorized user try to reach onlyForLogged');
+        res.redirect('/')
     }
 });
 
