@@ -35,18 +35,25 @@ app.get('/loginGoogle', (req, res) => {
                 loggedUser = result.data.name;
                 console.log(loggedUser);
             }
+           let accountLogoutUrl = "https://www.google.com/accounts/Logout" +
+                                    "?continue=https://appengine.google.com/_ah/logout" +
+                                    "?continue=https://pki-app1.herokuapp.com/";
+
         res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
-                                '<br><br><a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=/">logout</a>'))
+                                '<br><br><a href="',accountLogoutUrl,'">logout from google account</a>',
+                                    '<br><a href="/">logout</a>'));
         });
     }
 });
 
 app.get('/logoutGoogle', (req, res) => {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-    });
-    auth2.disconnect();
+    // var auth2 = gapi.auth2.getAuthInstance();
+    // auth2.signOut().then(function () {
+    // });
+    // auth2.disconnect();
+    app.get('https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com');
     res.redirect('/');
+    // "https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com"
 
 
     // var logout = function() {
