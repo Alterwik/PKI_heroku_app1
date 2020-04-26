@@ -1,6 +1,14 @@
 const { google } = require('googleapis');
 const express = require('express')
 const OAuth2Data = require('./google_key.json')
+const passport          =     require('passport')
+    , FacebookStrategy  =     require('passport-facebook').Strategy
+    , session           =     require('express-session')
+    , cookieParser      =     require('cookie-parser')
+    , bodyParser        =     require('body-parser')
+    , config            =     require('./configuration/config')
+    , mysql             =     require('mysql')
+    , app               =     express();
 
 const app = express()
 
@@ -14,7 +22,8 @@ var loggedUser = null;
 
 app.get('/', (req, res) => {
     res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
-        '<a href="/loginGoogle">login via Google account</a>'));
+        '<a href="/loginGoogle">login via Google account</a>',
+        '<a href="/loginFacebook">login via Facebook account</a>'));
 });
 
 app.get('/loginGoogle', (req, res) => {
@@ -80,6 +89,66 @@ app.get('/auth/google/callback', function (req, res) {
         });
     }
 });
+//facebook
+
+// Passport session setup.
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});
+
+passport.use(new FacebookStrategy({
+        clientID: '715138622648224',
+        clientSecret:'0e1fc8e655dab2ca936e84ca4a7407a8' ,
+        callbackURL: '/auth/facebook/callback'
+    },
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            //Check whether the User exists or not using profile.id
+            // if(config.use_database) {
+            //     // if sets to true
+            //     pool.query("SELECT * from user_info where user_id="+profile.id, (err,rows) => {
+            //         if(err) throw err;
+            //         if(rows && rows.length === 0) {
+            //             console.log("There is no such user, adding now");
+            //             pool.query("INSERT into user_info(user_id,user_name) VALUES('"+profile.id+"','"+profile.username+"')");
+            //         } else {
+            //             console.log("User already exists in database");
+            //         }
+            //     });
+            // }
+            return done(null, profile);
+        });
+    }
+));
+
+app.get('/auth/facebook', passport.authenticate('facebook',{scope:'email'}));
+
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { successRedirect : '/', failureRedirect: '/login' }),
+    function(req, res) {
+        authed = true;
+        res.redirect('/onlyForLogged');
+    });
+
+app.get('/logoutFacebook', function(req, res){
+    authed = false;
+    req.logout();
+    res.redirect('/');
+});
+
+app.get('/account', ensureAuthenticated, function(req, res){
+    res.render('account', { user: req.user });
+});
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login')
+}
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Server running at ${port}`));
