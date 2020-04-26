@@ -36,13 +36,22 @@ app.get('/loginGoogle', (req, res) => {
                 console.log(loggedUser);
             }
         res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
-                                '<br><br><a href="/logoutGoogle">logout</a>'))
+                                '<br><br><a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=/">logout</a>'))
         });
     }
 });
 
 app.get('/logoutGoogle', (req, res) => {
-    oAuth2Client.disconnect();
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+    });
+    auth2.disconnect();
+    res.redirect('/');
+
+
+    // var logout = function() {
+    //     document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://www.example.com";
+    // }
 });
 // let token = gapi.auth.getToken();
 // if (token) {
