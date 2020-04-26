@@ -16,7 +16,7 @@ var loggedUser = null;
 
 app.get('/', (req, res) => {
     res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
-        '<a href="/loginGoogle">login via Google account</a>',
+        '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>'));
 });
 
@@ -118,6 +118,13 @@ passport.use(new FacebookStrategy({
         });
     }
 ));
+app.get('/loginFacebook', (req, res) => {
+    if(authed){
+        res.redirect('/onlyForLogged');
+    }else{
+        res.redirect('/auth/facebook');
+    }
+});
 
 app.get('/auth/facebook', passport.authenticate('facebook',{scope:'email'}));
 
