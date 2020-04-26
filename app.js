@@ -12,7 +12,8 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_U
 var authed = false;
 
 app.get('/', (req, res) => {
-    res.send('<a href="/loginGoogle">login via Google account</a>');
+    res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
+        '<a href="/loginGoogle">login via Google account</a>'));
 });
 
 app.get('/loginGoogle', (req, res) => {
@@ -34,10 +35,30 @@ app.get('/loginGoogle', (req, res) => {
                 loggedUser = result.data.name;
                 console.log(loggedUser);
             }
-        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">'))
+        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
+                                '<br><br><a href="/logoutGoogle">logout</a>'))
         });
     }
 });
+
+app.get('/logoutGoogle', (req, res) => {
+    oAuth2Client.disconnect();
+});
+// let token = gapi.auth.getToken();
+// if (token) {
+//   let accessToken = gapi.auth.getToken().access_token;
+//   if (accessToken) {
+//     // make http get request towards: 'https://accounts.google.com/o/oauth2/revoke?token=' + accessToken
+//     // In angular you can do it like this:
+//     // $http({
+//     //   method: 'GET',
+//     //   url: 'https://accounts.google.com/o/oauth2/revoke?token=' + accessToken
+//     // });
+//   }
+// }
+// gapi.auth.setToken(null);
+// gapi.auth.signOut();
+
 
 app.get('/auth/google/callback', function (req, res) {
     const code = req.query.code

@@ -1,3 +1,5 @@
 /node_modules
 .DS_Store
 /*.env
+.idea/
+PKI_heroku_app1.iml
