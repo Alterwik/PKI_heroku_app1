@@ -61,7 +61,7 @@ app.get('/onlyForLogged', (req, res) => {
             "?continue=https://pki-app1.herokuapp.com/";
         res.send('Logged in: '.concat(loggedUser.name, '<img src="', loggedUser.picture, '"height="23" width="23">',
             '<br><br><a href="',accountLogoutUrl,'">logout from google account</a>',
-            '<br><a href="/">logout</a>'));
+            '<br><a href="/logoutGoogle">logout</a>'));
     } else {
         console.log('unauthorized user try to reach onlyForLogged');
         res.redirect('/')
