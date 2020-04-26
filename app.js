@@ -35,52 +35,37 @@ app.get('/loginGoogle', (req, res) => {
                 loggedUser = result.data.name;
                 console.log(loggedUser);
             }
-           let accountLogoutUrl = "https://www.google.com/accounts/Logout" +
-                                    "?continue=https://appengine.google.com/_ah/logout" +
-                                    "?continue=https://pki-app1.herokuapp.com/";
-
-        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
-                                '<br><br><a href="',accountLogoutUrl,'">logout from google account</a>',
-                                    '<br><a href="/">logout</a>'));
+            res.redirect('/onlyForLogged');
         });
     }
 });
 
 app.get('/logoutGoogle', (req, res) => {
-    // var auth2 = gapi.auth2.getAuthInstance();
-    // auth2.signOut().then(function () {
-    // });
-    // auth2.disconnect();
     res.send('<a href="/https://accounts.google.com/o/oauth2/revoke?' +
         'token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com?' +
         'continue=https://pki-app1.herokuapp.com/">logout</a>');
     req.logout();
     app.post('https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com');
-
+    authed = false;
     res.redirect('/');
-    // "https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com"
-
-
-    // var logout = function() {
-    //     document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://www.example.com";
-    // }
 });
 
-// let token = gapi.auth.getToken();
-// if (token) {
-//   let accessToken = gapi.auth.getToken().access_token;
-//   if (accessToken) {
-//     // make http get request towards: 'https://accounts.google.com/o/oauth2/revoke?token=' + accessToken
-//     // In angular you can do it like this:
-//     // $http({
-//     //   method: 'GET',
-//     //   url: 'https://accounts.google.com/o/oauth2/revoke?token=' + accessToken
-//     // });
-//   }
-// }
-// gapi.auth.setToken(null);
-// gapi.auth.signOut();
+app.get('/onlyForLogged', (req, res) => {
+    if (!authed) {
+        console.log('unauthorized user try to reach onlyForLogged');
+        res.redirect('/')
+    } else {
+        console.log('authorised user in onlyForLogged');
+        let accountLogoutUrl = "https://www.google.com/accounts/Logout" +
+            "?continue=https://appengine.google.com/_ah/logout" +
+            "?continue=https://pki-app1.herokuapp.com/";
 
+        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
+            '<br><br><a href="',accountLogoutUrl,'">logout from google account</a>',
+            '<br><a href="/">logout</a>'));
+
+    }
+});
 
 app.get('/auth/google/callback', function (req, res) {
     const code = req.query.code
