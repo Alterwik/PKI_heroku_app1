@@ -10,6 +10,7 @@ const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 var authed = false;
+var loggedUser;
 
 app.get('/', (req, res) => {
     res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
@@ -32,8 +33,8 @@ app.get('/loginGoogle', (req, res) => {
                 console.log('Niestety BŁĄD!!');
                 console.log(err);
             } else {
-                loggedUser = result.data.name;
-                console.log(loggedUser);
+                loggedUser = result.data;
+                console.log(loggedUser.name);
             }
             res.redirect('/onlyForLogged');
         });
@@ -60,7 +61,8 @@ app.get('/onlyForLogged', (req, res) => {
             "?continue=https://appengine.google.com/_ah/logout" +
             "?continue=https://pki-app1.herokuapp.com/";
 
-        res.send('Logged in: '.concat(loggedUser, '<img src="', result.data.picture, '"height="23" width="23">',
+
+        res.send('Logged in: '.concat(loggedUser.name, '<img src="', loggedUser.picture, '"height="23" width="23">',
             '<br><br><a href="',accountLogoutUrl,'">logout from google account</a>',
             '<br><a href="/">logout</a>'));
 
