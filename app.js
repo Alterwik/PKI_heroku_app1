@@ -2,12 +2,7 @@ const { google } = require('googleapis');
 const express = require('express')
 const OAuth2Data = require('./google_key.json')
 const passport          =     require('passport')
-    , FacebookStrategy  =     require('passport-facebook').Strategy
-    , session           =     require('express-session')
-    , cookieParser      =     require('cookie-parser')
-    , bodyParser        =     require('body-parser')
-    , config            =     require('./configuration/config')
-    , mysql             =     require('mysql');
+    , FacebookStrategy  =     require('passport-facebook').Strategy;
 
 const app = express()
 

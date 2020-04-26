@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "googleapis": "^49.0.0"
+    "googleapis": "^49.0.0",
+    "passport": "0.2.1",
+    "passport-facebook": "latest"
   }
 }
