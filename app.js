@@ -51,7 +51,9 @@ app.get('/logoutGoogle', (req, res) => {
     // auth2.signOut().then(function () {
     // });
     // auth2.disconnect();
-    app.get('https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com');
+    req.logout();
+    app.post('https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com');
+
     res.redirect('/');
     // "https://accounts.google.com/o/oauth2/revoke?token=549054502905-h2nv7bpt5u54elcci8cs3hpkna47gdpj.apps.googleusercontent.com"
 
@@ -60,6 +62,7 @@ app.get('/logoutGoogle', (req, res) => {
     //     document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://www.example.com";
     // }
 });
+
 // let token = gapi.auth.getToken();
 // if (token) {
 //   let accessToken = gapi.auth.getToken().access_token;
