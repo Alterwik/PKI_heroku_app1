@@ -7,8 +7,7 @@ const passport          =     require('passport')
     , cookieParser      =     require('cookie-parser')
     , bodyParser        =     require('body-parser')
     , config            =     require('./configuration/config')
-    , mysql             =     require('mysql')
-    , app               =     express();
+    , mysql             =     require('mysql');
 
 const app = express()
 
