@@ -18,12 +18,15 @@ var loggedUser = null;
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
 })
+client.connect();
 
 const getUsers = (request, response) => {
     console.log('Pobieram dane ...');
     client.query('SELECT * FROM public."users"', (error, res) => {
         if (error) {
+            console.log('ERROR:');
             throw error
+            console.log('ERROR --- ');
         }
         console.log('Dostałem ...');
         for (let row of res.rows) {
