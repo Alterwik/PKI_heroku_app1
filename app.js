@@ -43,7 +43,8 @@ app.get('/', (req, res) => {
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>');
     for (let row of dataTable) {
-        sendMsg.concat(row);
+        console.log('DEBUG: '.concat(JSON.stringify(row)));
+        sendMsg.concat(JSON.stringify(row));
     }
     res.send(sendMsg);
 });
