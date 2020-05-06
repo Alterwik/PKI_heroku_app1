@@ -31,7 +31,7 @@ const getUsers = (request, response) => {
         }
         console.log('Dostałem ...');
         for (let row of res.rows) {
-            dataTable.push(row);
+            dataTable.push(JSON.stringify(row));
             console.log(JSON.stringify(row));
         }
     })
@@ -42,9 +42,11 @@ app.get('/', (req, res) => {
     let sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>');
+    console.log('length of datatable: ');
+    console.log(dataTable.length());
     for (let row of dataTable) {
-        console.log('DEBUG: '.concat(JSON.stringify(row)));
-        sendMsg.concat(JSON.stringify(row));
+        console.log('DEBUG: '.concat(row));
+        sendMsg.concat(row);
     }
     res.send(sendMsg);
 });
