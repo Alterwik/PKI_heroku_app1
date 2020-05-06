@@ -14,6 +14,7 @@ const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 var authed = false;
 var loggedUser = null;
+let dataTable = [];
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -30,6 +31,7 @@ const getUsers = (request, response) => {
         }
         console.log('Dostałem ...');
         for (let row of res.rows) {
+            dataTable.push(row);
             console.log(JSON.stringify(row));
         }
     })
@@ -37,10 +39,13 @@ const getUsers = (request, response) => {
 
 app.get('/', (req, res) => {
     getUsers();
-    res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
+    let sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
-        '<a href="/loginFacebook">login via Facebook account</a>'));
-
+        '<a href="/loginFacebook">login via Facebook account</a>');
+    for (let row of dataTable) {
+        sendMsg.concat(row);
+    }
+    res.send(sendMsg);
 });
 
 app.get('/loginGoogle', (req, res) => {
