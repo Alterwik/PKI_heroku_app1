@@ -14,7 +14,7 @@ const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 var authed = false;
 var loggedUser = null;
-var dataTable = new Array();
+// var dataTable = new Array();
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -31,7 +31,7 @@ const getUsers = (request, response) => {
         }
         console.log('Dostałem ...');
         for (let row of res.rows) {
-            dataTable.push(JSON.stringify(row));
+            // dataTable.push(JSON.stringify(row));
             console.log(JSON.stringify(row));
         }
     })
@@ -43,11 +43,25 @@ app.get('/', (req, res) => {
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>');
     console.log('length of datatable: ');
-    console.log(dataTable.length);
-    for (let row of dataTable) {
-        console.log('DEBUG: '.concat(row));
-        sendMsg.concat(row);
-    }
+    // console.log(dataTable.length);
+    // for (let row of dataTable) {
+    //     console.log('DEBUG: '.concat(row));
+    //     sendMsg.concat(row);
+    // }
+
+
+        client.query('SELECT * FROM public."users"', (error, res) => {
+            if (error) {
+                throw error
+            }
+            // console.log('Dostałem ...');
+            for (let row of res.rows) {
+                // dataTable.push(JSON.stringify(row));
+                console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
+                sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
+            }
+        });
+
     res.send(sendMsg);
 });
 
