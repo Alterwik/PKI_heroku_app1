@@ -55,11 +55,13 @@ app.get('/', (req, res) => {
             throw error
         }
         // console.log('Dostałem ...');
+        sendMsg.concat('test1');
         for (let row of res.rows) {
             // dataTable.push(JSON.stringify(row));
             console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
             sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
+        sendMsg.concat('test2');
     });
     console.log('----------------');
     console.log(sendMsg);
