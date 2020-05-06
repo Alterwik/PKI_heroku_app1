@@ -39,7 +39,7 @@ const getUsers = (request, response) => {
 
 app.get('/', (req, res) => {
     getUsers();
-    let sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
+    var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>');
     // console.log('length of datatable: ');
@@ -55,13 +55,13 @@ app.get('/', (req, res) => {
             throw error
         }
         // console.log('Dostałem ...');
-        sendMsg.concat('test1');
+        sendMsg = sendMsg.concat('test1');
         for (let row of res.rows) {
             // dataTable.push(JSON.stringify(row));
             console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
-            sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
+            sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
-        sendMsg.concat('test2');
+        sendMsg = sendMsg.concat('test2');
     });
     console.log('----------------');
     console.log(sendMsg);
