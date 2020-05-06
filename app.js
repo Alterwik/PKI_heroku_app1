@@ -1,3 +1,4 @@
+const { Client } = require('pg');
 const { google } = require('googleapis');
 const express = require('express')
 const OAuth2Data = require('./google_key.json')
@@ -14,10 +15,29 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_U
 var authed = false;
 var loggedUser = null;
 
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+})
+
+const getUsers = (request, response) => {
+    console.log('Pobieram dane ...');
+    client.query('SELECT * FROM public."users"', (error, res) => {
+        if (error) {
+            throw error
+        }
+        console.log('Dostałem ...');
+        for (let row of res.rows) {
+            console.log(JSON.stringify(row));
+        }
+    })
+}
+
 app.get('/', (req, res) => {
+    getUsers();
     res.send('<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>'));
+
 });
 
 app.get('/loginGoogle', (req, res) => {
