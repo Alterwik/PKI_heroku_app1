@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
     //     sendMsg.concat(row);
     // }
 
-
+    sendMsg = sendMsg.concat('test0');
     client.query('SELECT * FROM public."users"', (error, res) => {
         if (error) {
             throw error
@@ -63,6 +63,7 @@ app.get('/', (req, res) => {
         }
         sendMsg = sendMsg.concat('test2');
     });
+    sendMsg = sendMsg.concat('test3');
     console.log('----------------');
     console.log(sendMsg);
     console.log('----------------');
