@@ -63,8 +63,6 @@ const {q1} = await client.query('SELECT * FROM public."users"', (error, res) => 
             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
         sendMsg = sendMsg.concat('test2');
-        //debug
-        res.return(sendMsg);
     });
 //debug
     sendMsg = sendMsg.concat('test3',q1);
