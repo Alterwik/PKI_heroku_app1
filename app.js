@@ -50,24 +50,30 @@ app.get('/', (req, res) => {
     // }
 
     sendMsg = sendMsg.concat('test0');
-    sendMsg = client.query('SELECT * FROM public."users"', (error, res, sendMsg) => {
+    //debug
+const q1 = client.query('SELECT * FROM public."users"', (error, res) => {
         if (error) {
             throw error
         }
         // console.log('Dostałem ...');
         sendMsg = sendMsg.concat('test1');
+    //debug
+        const query = "testtt";
         for (let row of res.rows) {
             // dataTable.push(JSON.stringify(row));
             console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
         sendMsg = sendMsg.concat('test2');
-        return sendMsg;
+    //debug
+        return query;
     });
     sendMsg = sendMsg.concat('test3');
     console.log('----------------');
     console.log(sendMsg);
-    console.log('----------------');
+    console.log('----------------q1');
+    //debug
+    console.log(q1);
     res.send(sendMsg);
 });
 
