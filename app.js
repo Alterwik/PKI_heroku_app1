@@ -37,7 +37,7 @@ const getUsers = (request, response) => {
     })
 }
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     getUsers();
     var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
@@ -51,29 +51,26 @@ app.get('/', (req, res) => {
 
     sendMsg = sendMsg.concat('test0');
     //debug
-const q1 = client.query('SELECT * FROM public."users"', (error, res) => {
+const q1 = await client.query('SELECT * FROM public."users"', (error, res) => {
         if (error) {
             throw error
         }
         // console.log('Dostałem ...');
         sendMsg = sendMsg.concat('test1');
-    //debug
-        const query = "testtt";
         for (let row of res.rows) {
             // dataTable.push(JSON.stringify(row));
             console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
         sendMsg = sendMsg.concat('test2');
-    //debug
-        return query;
+        //debug
+        return sendMsg;
     });
-    sendMsg = sendMsg.concat('test3');
+//debug
+    sendMsg = sendMsg.concat('test3',q1);
     console.log('----------------');
     console.log(sendMsg);
     console.log('----------------q1');
-    //debug
-    console.log(q1);
     res.send(sendMsg);
 });
 
