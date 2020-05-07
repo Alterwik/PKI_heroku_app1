@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
     // }
 
     sendMsg = sendMsg.concat('test0');
-    client.query('SELECT * FROM public."users"', (error, res) => {
+    sendMsg = client.query('SELECT * FROM public."users"', (error, res, sendMsg) => {
         if (error) {
             throw error
         }
@@ -62,6 +62,7 @@ app.get('/', (req, res) => {
             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
         sendMsg = sendMsg.concat('test2');
+        return sendMsg;
     });
     sendMsg = sendMsg.concat('test3');
     console.log('----------------');
