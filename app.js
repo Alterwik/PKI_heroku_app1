@@ -50,8 +50,7 @@ app.get('/', async (req, res) => {
     // }
 
     sendMsg = sendMsg.concat('test0');
-    //debug
-const {q1} = await client.query('SELECT * FROM public."users"', (error, res) => {
+client.query('SELECT * FROM public."users"', (error, res) => {
         if (error) {
             throw error
         }
@@ -64,8 +63,7 @@ const {q1} = await client.query('SELECT * FROM public."users"', (error, res) => 
         }
         sendMsg = sendMsg.concat('test2');
     });
-//debug
-    sendMsg = sendMsg.concat('test3',q1);
+    sendMsg = sendMsg.concat('test3');
     console.log('----------------');
     console.log(sendMsg);
     console.log('----------------q1');
