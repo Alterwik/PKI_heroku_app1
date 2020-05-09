@@ -39,7 +39,7 @@ const getUsers = (request, response) => {
 
 app.get('/', async (req, res) => {
     getUsers();
-    var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
+    sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>');
     // console.log('length of datatable: ');
