@@ -50,7 +50,8 @@ app.get('/', async (req, res) => {
     // }
 
     sendMsg = sendMsg.concat('test0');
-client.query('SELECT * FROM public."users"', (error, res) => {
+client.query('SELECT * FROM public."users"', (error, res, sendMsg) => {
+    console.log('DEBUG----sendMsg--------------:', sendMsg, '---');
         if (error) {
             throw error
         }
