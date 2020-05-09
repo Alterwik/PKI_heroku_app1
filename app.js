@@ -37,15 +37,15 @@ const getUsers = (request, response) => {
     })
 }
 
-function printQuery(query) {
+function printQuery(queryResult) {
     console.log('-/-print query---');
-    console.log(query);
+    console.log(queryResult);
     console.log('---print query-/-');
 }
 
 app.get('/', async (req, res) => {
     getUsers();
-    sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
+    var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
         '<a href="/loginGoogle">login via Google account</a><br><br>',
         '<a href="/loginFacebook">login via Facebook account</a>');
     // console.log('length of datatable: ');
@@ -55,7 +55,7 @@ app.get('/', async (req, res) => {
     //     sendMsg.concat(row);
     // }
 
-    let sendMsg = sendMsg.concat('test0');
+    sendMsg = sendMsg.concat('test0');
 client.query('SELECT * FROM public."users"', (error, res2) => {
     // console.log('DEBUG----sendMsg--------------:', sendMsg, '---');
         if (error) throw error
