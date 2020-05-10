@@ -72,7 +72,7 @@ app.post('/login', (req, res) => {
                 if (error) {
                     throw error
                 }
-                res.redirect('/login');
+                res.redirect('/');
             })
         } else {
             client.query('UPDATE public."users" SET lastvisit = $1, counter = counter + 1 WHERE name = $2', [date, name], (error) => {
