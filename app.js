@@ -15,6 +15,9 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_U
 var authed = false;
 var loggedUser = null;
 
+var path = __dirname + '/templates/';
+app.set('view engine', 'ejs');
+
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
 })
@@ -35,19 +38,29 @@ const getUsers = (request, response) => {
     })
 }
 
-app.get('/', async (req, res) => {
+// app.get('/', async (req, res) => {
+//     getUsers();
+// client.query('SELECT * FROM public."users"', (error, res2) => {
+//     var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
+//         '<a href="/loginGoogle">login via Google account</a><br><br>',
+//         '<a href="/loginFacebook">login via Facebook account</a>');
+//         if (error) throw error
+//         for (let row of res2.rows) {
+//             console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
+//             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
+//         }
+//     res.send(sendMsg);
+//     });
+// });
+
+app.get('/', (req, res) => {
     getUsers();
-client.query('SELECT * FROM public."users"', (error, res2) => {
-    var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
-        '<a href="/loginGoogle">login via Google account</a><br><br>',
-        '<a href="/loginFacebook">login via Facebook account</a>');
-        if (error) throw error
-        for (let row of res2.rows) {
-            console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
-            sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
+    client.query('SELECT * FROM public."users" ORDER BY id', (error, res2) => {
+        if (error) {
+            throw error
         }
-    res.send(sendMsg);
-    });
+        res.render('index', {data: res2.rows});
+    })
 });
 
 app.get('/loginGoogle', (req, res) => {
