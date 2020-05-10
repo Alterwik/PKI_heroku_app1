@@ -56,7 +56,7 @@ app.get('/', async (req, res) => {
     //     sendMsg.concat(row);
     // }
 
-    sendMsg = sendMsg.concat('test0');
+    // sendMsg = sendMsg.concat('test0');
 client.query('SELECT * FROM public."users"', (error, res2) => {
     // console.log('DEBUG----sendMsg--------------:', sendMsg, '---');
     var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
