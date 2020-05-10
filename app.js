@@ -60,11 +60,13 @@ app.post('/login', (req, res) => {
     var date = new Date().toISOString();
 
     client.query('SELECT * FROM public."users" WHERE name = $1', [name], (error, resultSelect) => {
+        console.log('SELECT client query ')
         if (error) {
             throw error
         }
-        console.log(resultSelect);
+        console.log('USER NOT EXIST - result SELECT:', resultSelect);
         if (resultSelect.rowCount == 0) {
+            console.log('INSERT USER');
             client.query('INSERT INTO public."users" (name, joined, lastvisit) VALUES ($1, $2, $3)', [name, date, date], (error) => {
                 if (error) {
                     throw error
@@ -73,6 +75,7 @@ app.post('/login', (req, res) => {
             })
         } else {
             client.query('UPDATE public."users" SET lastvisit = $1, counter = counter + 1 WHERE name = $2', [date, name], (error) => {
+                console.log('UPDATE USER');
                 if (error) {
                     throw error
                 }
