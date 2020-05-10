@@ -26,8 +26,7 @@
 					<a class="nav-item nav-link" href="/loginGoogle">login via Google account</a>
 					<a class="nav-item nav-link" href="/loginFacebook">login via Facebook account</a>
 					<%if(loggedin) { %>
-						<a class="nav-item nav-link" href="/logout">logout from data base</a>
-						<div class="nav-item nav-link"> Logged in: <%=username%></div>
+						<a class="nav-item nav-link" href="/logout">logout user <b><%=username%></b> from data base</a>
 					<% } else { %>
 						<a class="nav-item nav-link" href="/login">login via data base</a>
 					<% } %>
