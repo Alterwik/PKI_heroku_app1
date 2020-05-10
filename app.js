@@ -37,9 +37,10 @@ const getUsers = (request, response) => {
     })
 }
 
-function printQuery(queryResult) {
+function printQuery(queryResult, messageToSend) {
     console.log('-/-print query---');
     console.log(queryResult);
+    messageToSend.concat(queryResult)
     console.log('---print query-/-');
 }
 
@@ -67,8 +68,8 @@ client.query('SELECT * FROM public."users"', (error, res2) => {
             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
         }
         sendMsg = sendMsg.concat('test2');
-    console.log(res2);
-    printQuery(sendMsg)
+    // console.log(res2);
+    printQuery(sendMsg, sendMsg)
     });
     sendMsg = sendMsg.concat('test3');
     console.log('----------------');
