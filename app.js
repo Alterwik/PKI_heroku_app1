@@ -37,21 +37,6 @@ const getUsers = (request, response) => {
     })
 }
 
-// app.get('/', async (req, res) => {
-//     getUsers();
-// client.query('SELECT * FROM public."users"', (error, res2) => {
-//     var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
-//         '<a href="/loginGoogle">login via Google account</a><br><br>',
-//         '<a href="/loginFacebook">login via Facebook account</a>');
-//         if (error) throw error
-//         for (let row of res2.rows) {
-//             console.log('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
-//             sendMsg = sendMsg.concat('<H3>'.concat(JSON.stringify(row)).concat('</H3>'));
-//         }
-//     res.send(sendMsg);
-//     });
-// });
-
 app.get('/', (req, res) => {
     getUsers();
     client.query('SELECT * FROM public."users" ORDER BY id', (error, res2) => {
@@ -143,19 +128,6 @@ passport.use(new FacebookStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
-            //Check whether the User exists or not using profile.id
-            // if(config.use_database) {
-            //     // if sets to true
-            //     pool.query("SELECT * from user_info where user_id="+profile.id, (err,rows) => {
-            //         if(err) throw err;
-            //         if(rows && rows.length === 0) {
-            //             console.log("There is no such user, adding now");
-            //             pool.query("INSERT into user_info(user_id,user_name) VALUES('"+profile.id+"','"+profile.username+"')");
-            //         } else {
-            //             console.log("User already exists in database");
-            //         }
-            //     });
-            // }
             return done(null, profile);
         });
     }
