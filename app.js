@@ -46,9 +46,9 @@ function printQuery(queryResult, messageToSend) {
 
 app.get('/', async (req, res) => {
     getUsers();
-    var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
-        '<a href="/loginGoogle">login via Google account</a><br><br>',
-        '<a href="/loginFacebook">login via Facebook account</a>');
+    // var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
+    //     '<a href="/loginGoogle">login via Google account</a><br><br>',
+    //     '<a href="/loginFacebook">login via Facebook account</a>');
     // console.log('length of datatable: ');
     // console.log(dataTable.length);
     // for (let row of dataTable) {
@@ -59,6 +59,9 @@ app.get('/', async (req, res) => {
     sendMsg = sendMsg.concat('test0');
 client.query('SELECT * FROM public."users"', (error, res2) => {
     // console.log('DEBUG----sendMsg--------------:', sendMsg, '---');
+    var sendMsg = '<H2>PKI heroku app1</H2><br><br>'.concat(
+        '<a href="/loginGoogle">login via Google account</a><br><br>',
+        '<a href="/loginFacebook">login via Facebook account</a>');
         if (error) throw error
         // console.log('Dostałem ...');
         sendMsg = sendMsg.concat('test1');
@@ -69,13 +72,14 @@ client.query('SELECT * FROM public."users"', (error, res2) => {
         }
         sendMsg = sendMsg.concat('test2');
     // console.log(res2);
-    printQuery(sendMsg, sendMsg)
-    });
-    sendMsg = sendMsg.concat('test3');
-    console.log('----------------');
-    console.log(sendMsg);
-    console.log('----------------q1');
+    // printQuery(sendMsg, sendMsg)
     res.send(sendMsg);
+    });
+    // sendMsg = sendMsg.concat('test3');
+    // console.log('----------------');
+    // console.log(sendMsg);
+    // console.log('----------------q1');
+
 });
 
 app.get('/loginGoogle', (req, res) => {
