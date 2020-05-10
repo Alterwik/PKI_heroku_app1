@@ -3,7 +3,8 @@ const { google } = require('googleapis');
 const express = require('express')
 const OAuth2Data = require('./google_key.json')
 const passport          =     require('passport')
-    , FacebookStrategy  =     require('passport-facebook').Strategy;
+    , FacebookStrategy  =     require('passport-facebook').Strategy
+    , session			  =		require('express-session');
 const bodyParser = require('body-parser');
 
 const app = express()
@@ -21,6 +22,12 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
 })
@@ -48,12 +55,16 @@ app.get('/', (req, res) => {
             throw error
             res.render('index', {data: null, dbConnectionAvail: false});
         }
-        res.render('index', {data: res2.rows, dbConnectionAvail: true});
+        res.render('index', {data: res2.rows, dbConnectionAvail: true, loggedin: req.session.loggedin, username: req.session.username});
     })
 });
 
 app.get('/login',function(req, res){
+    if(!req.session.loggedin) {
         res.render('login');
+    } else {
+        res.redirect('/');
+    }
 });
 
 app.post('/login', (req, res) => {
@@ -72,6 +83,8 @@ app.post('/login', (req, res) => {
                 if (error) {
                     throw error
                 }
+                req.session.loggedin = true;
+                req.session.username = name;
                 res.redirect('/');
             })
         } else {
@@ -84,6 +97,11 @@ app.post('/login', (req, res) => {
             })
         }
     })
+});
+
+app.get('/logout',function(req, res){
+        req.session.destroy();
+        res.redirect('/');
 });
 
 //google

@@ -25,7 +25,12 @@
 					<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
 					<a class="nav-item nav-link" href="/loginGoogle">login via Google account</a>
 					<a class="nav-item nav-link" href="/loginFacebook">login via Facebook account</a>
-					<a class="nav-item nav-link" href="/login">login via data base</a>
+					<%if(loggedin) { %>
+						<a class="nav-item nav-link" href="/logout">logout from data base</a>
+						<div> Logged in: <%=username%></div>
+					<% } else { %>
+						<a class="nav-item nav-link" href="/login">login via data base</a>
+					<% } %>
 				</div>
 			</div>
 		</nav>
