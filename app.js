@@ -15,7 +15,6 @@ const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_U
 var authed = false;
 var loggedUser = null;
 
-var path = __dirname + '/templates/';
 app.set('view engine', 'ejs');
 
 const client = new Client({
