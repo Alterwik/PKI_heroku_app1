@@ -47,6 +47,38 @@ app.get('/', (req, res) => {
     })
 });
 
+app.get('/login',function(req, res){
+        res.render('login');
+});
+
+app.post('/login', (req, res) => {
+    var name = req.body.name;
+    var date = new Date().toISOString();
+
+    client.query('SELECT * FROM public."users" WHERE name = $1', [name], (error, resultSelect) => {
+        if (error) {
+            throw error
+        }
+        console.log(resultSelect);
+        if (resultSelect.rowCount == 0) {
+            client.query('INSERT INTO public."users" (name, joined, lastvisit) VALUES ($1, $2, $3)', [name, date, date], (error) => {
+                if (error) {
+                    throw error
+                }
+                res.redirect('/login');
+            })
+        } else {
+            client.query('UPDATE public."users" SET lastvisit = $1, counter = counter + 1 WHERE name = $2', [date, name], (error) => {
+                if (error) {
+                    throw error
+                }
+                res.redirect('/');
+            })
+        }
+    })
+});
+
+//google
 app.get('/loginGoogle', (req, res) => {
     if (!authed) {
         // Generate an OAuth URL and redirect there
