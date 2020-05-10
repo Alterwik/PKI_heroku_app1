@@ -85,6 +85,7 @@ app.post('/login', (req, res) => {
                 }
                 req.session.loggedin = true;
                 req.session.username = name;
+                console.log('User ', name, ' logged in!')
                 res.redirect('/');
             })
         } else {
@@ -93,6 +94,9 @@ app.post('/login', (req, res) => {
                 if (error) {
                     throw error
                 }
+                req.session.loggedin = true;
+                req.session.username = name;
+                console.log('User ', name, ' logged in!')
                 res.redirect('/');
             })
         }
