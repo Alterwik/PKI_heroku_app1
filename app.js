@@ -4,6 +4,7 @@ const express = require('express')
 const OAuth2Data = require('./google_key.json')
 const passport          =     require('passport')
     , FacebookStrategy  =     require('passport-facebook').Strategy;
+const bodyParser = require('body-parser');
 
 const app = express()
 
@@ -16,7 +17,10 @@ var authed = false;
 var loggedUser = null;
 
 app.set('view engine', 'ejs');
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
 })
