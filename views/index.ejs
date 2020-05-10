@@ -74,7 +74,13 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Modal body text goes here.</p>
+						<p>
+							<% if(dbConnectionAvail){ %>
+								Połączono z bazą danych.
+							<%}else{ %>
+								Brak połączenia z bazą danych.
+							<% } %>
+						</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

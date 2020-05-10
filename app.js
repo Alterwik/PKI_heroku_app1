@@ -46,8 +46,9 @@ app.get('/', (req, res) => {
     client.query('SELECT * FROM public."users" ORDER BY id', (error, res2) => {
         if (error) {
             throw error
+            res.render('index', {data: null, dbConnectionAvail: false});
         }
-        res.render('index', {data: res2.rows});
+        res.render('index', {data: res2.rows, dbConnectionAvail: true});
     })
 });
 
