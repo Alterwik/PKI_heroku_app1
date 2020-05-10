@@ -67,7 +67,7 @@ app.post('/login', (req, res) => {
         console.log('USER NOT EXIST - result SELECT:', resultSelect);
         if (resultSelect.rowCount == 0) {
             console.log('INSERT USER');
-            client.query('INSERT INTO public."users" (name, joined, lastvisit) VALUES ($1, $2, $3)', [name, date, date], (error) => {
+            client.query('INSERT INTO public."users" (name, joined, lastvisit, counter) VALUES ($1, $2, $3, $4)', [name, date, date, 1], (error) => {
                 if (error) {
                     throw error
                 }
